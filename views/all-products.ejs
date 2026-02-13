@@ -1,0 +1,45 @@
+<div class="container">
+    <h1>All Products (Admin View)</h1>
+    
+    <div class="actions-bar">
+        <a href="/products/add" class="btn btn-primary">Add New Product</a>
+        <a href="/products/my-products" class="btn btn-secondary">My Products</a>
+        <a href="/products" class="btn btn-secondary">Public Products</a>
+    </div>
+    
+    <% if (typeof error !== 'undefined' && error) { %>
+        <div class="alert alert-error"><%= error %></div>
+    <% } %>
+    
+    <div class="product-grid">
+        <% if (typeof products !== 'undefined' && products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <div class="product-card admin-view">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" onerror="this.src='/images/product-placeholder.jpg'">
+                    <h3><%= product.name %></h3>
+                    <p class="description"><%= product.description.substring(0, 100) %>...</p>
+                    <p class="price">$<%= product.price.toFixed(2) %></p>
+                    <p class="category"><%= product.category %></p>
+                    <p class="stock <%= product.stock > 0 ? 'in-stock' : 'out-of-stock' %>">
+                        <%= product.stock > 0 ? 'In Stock (' + product.stock + ')' : 'Out of Stock' %>
+                    </p>
+                    <div class="owner-info">
+                        <strong>Owner:</strong> <%= product.user ? product.user.name : 'Unknown' %>
+                        <% if (product.user && product.user.email) { %>
+                            (<%= product.user.email %>)
+                        <% } %>
+                    </div>
+                    <div class="product-actions">
+                        <a href="/products/<%= product._id %>" class="btn btn-secondary">View Details</a>
+                        <a href="/products/delete/<%= product._id %>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this product?')">Delete</a>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-products-message">
+                <p>No products available yet.</p>
+                <a href="/products/add" class="btn btn-primary">Add a Product</a>
+            </div>
+        <% } %>
+    </div>
+</div>

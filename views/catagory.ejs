@@ -1,0 +1,55 @@
+<div class="container">
+    <h1>Shopping Cart</h1>
+    
+    <% if (typeof cart !== 'undefined' && cart && cart.cartItems.length > 0) { %>
+        <div class="cart-items">
+            <table class="cart-table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cart.cartItems.forEach(item => { %>
+                        <tr>
+                            <td>
+                                <div class="cart-item-info">
+                                    <img src="<%= item.image || '/images/product-placeholder.jpg' %>" alt="<%= item.name %>" onerror="this.src='/images/product-placeholder.jpg'">
+                                    <span><%= item.name %></span>
+                                </div>
+                            </td>
+                            <td>$<%= item.price.toFixed(2) %></td>
+                            <td>
+                                <div class="quantity-controls">
+                                    <button class="btn-mini update-qty" data-item-id="<%= item._id %>" data-action="decrease">-</button>
+                                    <span><%= item.qty %></span>
+                                    <button class="btn-mini update-qty" data-item-id="<%= item._id %>" data-action="increase">+</button>
+                                </div>
+                            </td>
+                            <td>$<%= (item.price * item.qty).toFixed(2) %></td>
+                            <td>
+                                <button class="btn btn-danger btn-sm remove-item" data-item-id="<%= item._id %>">Remove</button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="cart-summary">
+            <h3>Order Summary</h3>
+            <p>Total Items: <%= cart.cartItems.reduce((sum, item) => sum + item.qty, 0) %></p>
+            <p class="total-price">Total Price: $<%= cart.totalPrice.toFixed(2) %></p>
+            <a href="/orders/checkout" class="btn btn-primary btn-lg">Proceed to Checkout</a>
+        </div>
+    <% } else { %>
+        <div class="empty-cart">
+            <p>Your cart is empty.</p>
+            <a href="/products" class="btn btn-primary">Continue Shopping</a>
+        </div>
+    <% } %>
+</div>

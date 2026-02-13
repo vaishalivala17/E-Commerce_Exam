@@ -1,0 +1,38 @@
+<%- include('partial/header') %>
+
+<div class="hero">
+    <div class="container">
+        <h1>Welcome to E-Shop</h1>
+        <p>Your one-stop shop for all your needs</p>
+        <a href="/products" class="btn btn-primary">Shop Now</a>
+    </div>
+</div>
+
+<div class="container">
+    <section class="featured-products">
+        <h2>Featured Products</h2>
+        <div class="row">
+            <% if (typeof products !== 'undefined' && products.length > 0) { %>
+                <% products.slice(0, 6).forEach(product => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="card product-card">
+                            <img src="<%= product.image %>" class="card-img-top" alt="<%= product.name %>" onerror="this.src='/images/product-placeholder.jpg'">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= product.name %></h5>
+                                <p class="price">$<%= product.price.toFixed(2) %></p>
+                                <p class="category"><small class="text-muted"><%= product.category %></small></p>
+                                <a href="/products/<%= product._id %>" class="btn btn-secondary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No products available yet.</p>
+            <% } %>
+        </div>
+    </section>
+
+    
+</div>
+
+<%- include('partial/footer') %>

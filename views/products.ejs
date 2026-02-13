@@ -1,0 +1,35 @@
+<div class="container">
+    <h1>Our Products</h1>
+    
+    <div class="search-bar">
+        <form action="/products/search" method="GET" class="search-form">
+            <input type="text" name="keyword" placeholder="Search products..." value="<%= typeof keyword !== 'undefined' ? keyword : '' %>">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+    </div>
+    
+    <div class="product-grid">
+        <% if (typeof products !== 'undefined' && products.length > 0) { %>
+            <% products.forEach(product => { %>
+                <div class="product-card">
+                    <img src="<%= product.image %>" alt="<%= product.name %>" onerror="this.src='/images/product-placeholder.jpg'">
+                    <h3><%= product.name %></h3>
+                    <p class="description"><%= product.description.substring(0, 100) %>...</p>
+                    <p class="price">$<%= product.price.toFixed(2) %></p>
+                    <p class="category"><%= product.category %></p>
+                    <p class="stock <%= product.stock > 0 ? 'in-stock' : 'out-of-stock' %>">
+                        <%= product.stock > 0 ? 'In Stock (' + product.stock + ')' : 'Out of Stock' %>
+                    </p>
+                    <div class="product-actions">
+                        <a href="/products/<%= product._id %>" class="btn btn-secondary">View Details</a>
+                        <% if (product.stock > 0 && typeof user !== 'undefined' && user) { %>
+                            <button class="btn btn-primary add-to-cart" data-product-id="<%= product._id %>">Add to Cart</button>
+                        <% } %>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <p class="no-products">No products found.</p>
+        <% } %>
+    </div>
+</div>
