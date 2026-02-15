@@ -12,8 +12,6 @@ const {
 
 const router = express.Router();
 
-// View Routes (EJS) - Using Controllers
-
 // Get all products - View route (public)
 router.get('/', getProducts);
 
