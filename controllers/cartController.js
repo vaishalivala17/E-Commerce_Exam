@@ -1,9 +1,6 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 
-// @desc    Get user cart
-// @route   GET /cart
-// @access  Private
 const getCart = async (req, res) => {
     try {
         let cart = await Cart.findOne({ user: req.user._id }).populate('cartItems.product');
@@ -20,9 +17,6 @@ const getCart = async (req, res) => {
     }
 };
 
-// @desc    Add item to cart
-// @route   POST /cart
-// @access  Private
 const addToCart = async (req, res) => {
     try {
         const { productId, qty } = req.body;
@@ -70,9 +64,6 @@ const addToCart = async (req, res) => {
     }
 };
 
-// @desc    Update cart item quantity
-// @route   PUT /cart/:itemId
-// @access  Private
 const updateCartItem = async (req, res) => {
     try {
         const { qty } = req.body;
@@ -104,9 +95,6 @@ const updateCartItem = async (req, res) => {
     }
 };
 
-// @desc    Remove item from cart
-// @route   DELETE /cart/:itemId
-// @access  Private
 const removeFromCart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ user: req.user._id });
@@ -127,9 +115,6 @@ const removeFromCart = async (req, res) => {
     }
 };
 
-// @desc    Clear cart
-// @route   DELETE /cart
-// @access  Private
 const clearCart = async (req, res) => {
     try {
         const cart = await Cart.findOne({ user: req.user._id });
