@@ -8,23 +8,14 @@ const generateToken = (id) => {
     });
 };
 
-// @desc    Show login form
-// @route   GET /auth/login
-// @access  Public
 const showLoginForm = (req, res) => {
     res.render('login', { error: null });
 };
 
-// @desc    Show register form
-// @route   GET /auth/register
-// @access  Public
 const showRegisterForm = (req, res) => {
     res.render('register', { error: null });
 };
 
-// @desc    Register new user
-// @route   POST /auth/register
-// @access  Public
 const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
@@ -65,9 +56,6 @@ const register = async (req, res) => {
     }
 };
 
-// @desc    Authenticate user & login
-// @route   POST /auth/login
-// @access  Public
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -100,9 +88,6 @@ const login = async (req, res) => {
     }
 };
 
-// @desc    Logout user / clear cookie
-// @route   GET /auth/logout
-// @access  Public
 const logout = (req, res) => {
     res.cookie('token', '', {
         httpOnly: true,
@@ -111,9 +96,6 @@ const logout = (req, res) => {
     res.redirect('/');
 };
 
-// @desc    Get user profile page
-// @route   GET /auth/profile
-// @access  Private
 const getProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id).select('-password');
@@ -124,9 +106,6 @@ const getProfile = async (req, res) => {
     }
 };
 
-// @desc    Update user profile
-// @route   PUT /auth/profile
-// @access  Private
 const updateProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user._id);
