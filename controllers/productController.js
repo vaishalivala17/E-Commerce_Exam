@@ -1,8 +1,5 @@
 const Product = require('../models/Product');
 
-// @desc    Get all products
-// @route   GET /products
-// @access  Public
 const getProducts = async (req, res) => {
     try {
         const products = await Product.find({}).populate('user', 'name');
@@ -13,9 +10,6 @@ const getProducts = async (req, res) => {
     }
 };
 
-// @desc    Get single product
-// @route   GET /products/:id
-// @access  Public
 const getProductById = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id).populate('user', 'name');
@@ -31,9 +25,6 @@ const getProductById = async (req, res) => {
     }
 };
 
-// @desc    Get user's own products
-// @route   GET /products/my-products
-// @access  Private
 const getMyProducts = async (req, res) => {
     try {
         const products = await Product.find({ user: req.user._id }).populate('user', 'name');
@@ -44,9 +35,6 @@ const getMyProducts = async (req, res) => {
     }
 };
 
-// @desc    Get all products (admin)
-// @route   GET /products/all-products
-// @access  Private/Admin
 const getAllProductsAdmin = async (req, res) => {
     try {
         const products = await Product.find({}).populate('user', 'name email');
@@ -57,16 +45,10 @@ const getAllProductsAdmin = async (req, res) => {
     }
 };
 
-// @desc    Show add product form
-// @route   GET /products/add
-// @access  Private
 const showAddProductForm = (req, res) => {
     res.render('add-product');
 };
 
-// @desc    Add new product
-// @route   POST /products/add
-// @access  Private
 const addProduct = async (req, res) => {
     try {
         const { name, description, price, category, image, stock } = req.body;
@@ -89,9 +71,6 @@ const addProduct = async (req, res) => {
     }
 };
 
-// @desc    Delete product
-// @route   GET /products/delete/:id
-// @access  Private (Admin or Owner)
 const deleteProduct = async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
