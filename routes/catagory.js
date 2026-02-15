@@ -4,9 +4,6 @@ const Product = require('../models/Product');
 
 const router = express.Router();
 
-// @desc    Get all categories
-// @route   GET /catagory
-// @access  Public
 router.get('/', async (req, res) => {
     try {
         const catagories = await Catagory.find({});
@@ -17,9 +14,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-// @desc    Get products by category
-// @route   GET /catagory/:categoryId
-// @access  Public
 router.get('/:categoryId', async (req, res) => {
     try {
         const category = await Catagory.findById(req.params.categoryId);
